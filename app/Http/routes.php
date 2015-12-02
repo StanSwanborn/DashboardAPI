@@ -35,4 +35,9 @@ $app->group([], function ($app) {
         'uses' => 'App\Http\Controllers\DashboardController@authorizeClient',
         'as' => 'dashboard.authorizeClient'
     ]);
+
+    $app->get('dashboard/logoutClient', [
+        'uses' => 'App\Http\Controllers\DashboardController@logoutClient',
+        'as' => 'dashboard.logout'
+    ]);
 });

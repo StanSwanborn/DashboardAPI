@@ -45,8 +45,13 @@ class DashboardController extends Controller
                 if($this->sdk->clientUserAuthorized())
                     return redirect()->route('dashboard');
                 else
-                    return redirect()->route('dashboard.login')->with('status', 'jammerjoh');
+                    return redirect()->route('dashboard.login')->with('status', 'Login failed');
                 break;
         }
+    }
+
+    public function logoutClient() {
+        $this->sdk->logout();
+        return redirect()->route('dashboard.login')->with('status', 'Logged out');
     }
 }
