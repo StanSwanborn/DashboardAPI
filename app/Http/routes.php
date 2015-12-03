@@ -50,4 +50,8 @@ $app->group(['middleware' => 'auth'], function ($app) {
         'uses' => 'App\Http\Controllers\ClientController@index',
         'as' => 'dashboard.client'
     ]);
+    $app->get('dashboard/client/{clientId}/applications', [
+        'uses' => 'App\Http\Controllers\ApplicationController@index',
+        'as' => 'dashboard.client.application'
+    ]);
 });

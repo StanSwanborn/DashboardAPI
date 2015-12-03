@@ -26,7 +26,7 @@
                         <tr>
                             <th scope="row">{{ $client->mid }}</th>
                             <td>
-                                <a href="{{ route('dashboard', [ 'clientId' => $client->mid ]) }}">{{ $client->name_mandant }}</a>
+                                <a href="{{ route('dashboard.client.application', [ 'clientId' => $client->mid ]) }}">{{ $client->name_mandant }}</a>
                             </td>
                             <td>{{ $client->count }}</td>
                         </tr>
