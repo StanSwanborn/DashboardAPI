@@ -3,3 +3,4 @@
 .idea
 *.lock
 bootstrap/app.php
+.idea/workspace.xml
