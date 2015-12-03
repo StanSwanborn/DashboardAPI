@@ -1,5 +1,9 @@
 <?php
 
+use App\Services\Contracts\CacheService;
+use App\Services\KundenMeisterService;
+use Illuminate\Support\Facades\Cache;
+
 if (! function_exists('on_route')) {
     function on_route($name, $exact = false)
     {
@@ -20,3 +24,24 @@ if (! function_exists('on_route')) {
         }
     }
 }
+
+if (! function_exists('user')) {
+    /**
+     * @return \SDK\Responses\MeResponse
+     */
+    function user()
+    {
+        /** @var KundenMeisterService $sdk */
+        $sdk = app(KundenMeisterService::class);
+
+        /** @var CacheService $cache */
+        $cache = app(CacheService::class);
+
+        if(!$me = $cache->get('user', 'me'))
+            $cache->put('user', 'me', $me = $sdk->userManagement()->me());
+
+        return $me;
+    }
+}
+
+

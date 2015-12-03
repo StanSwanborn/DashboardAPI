@@ -30,7 +30,7 @@
     <!-- HTML5 shim and Respond.js") }} IE8 support of HTML5 elements and media queries -->
 
     <!--[if lt IE 9]>
-    <script src="{{ app('url')->asset(" css/dashboard/assets/js/html5shiv.js") }}"></script>
+    <script src="{{ app('url')->asset("css/dashboard/assets/js/html5shiv.js") }}"></script>
     <
     script;
     src = "{{ app('url')->asset("
@@ -38,7 +38,7 @@
     ") }}" >;</script>
     <![endif]-->
 </head>
-<body class="login-layout">
+<body class="login-layout" style="background-image: url('http://xyer.co/wallpaper/14/5/snow-hd-1080p-hd.jpg')">
 <div class="main-container">
     <div class="main-content">
         <div class="row">

@@ -1,26 +1,21 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Services\KundenMeisterService;
 use Illuminate\Http\Request;
-use SDK\KundenMeister;
+use SDK\Exceptions\Remote\InvalidCredentialsException;
 
 class DashboardController extends Controller
 {
-    /** @var KundenMeister $sdk */
+    /** @var KundenMeisterService $sdk */
     private $sdk;
 
-    public function __construct() {
-        $this->sdk = new KundenMeister(6, 'q0CTixlOPnB42Yf9gzcOVMPY43W1CizBswiDf8lQNHlsY6ZpklfkcJlHHmOG1n95Anv2zbYcAt8k9hcXOaMK0IqyrhIvOa2GNb1IFZeUREMrTaUEkYvTK53w1Pmc7jBc', 'http://localhost:8081/index.php/');
-        $this->sdk->initialize();
+    public function __construct(KundenMeisterService $sdk) {
+        $this->sdk = $sdk;
     }
 
     public function index() {
-        if(!$this->sdk->clientUserAuthorized())
-            return redirect()->route('dashboard.login');
-
-        $user = $this->sdk->userManagement()->me();
-
-        return view('dashboard.index', ['user' => $user]);
+        return view('dashboard.index');
     }
 
     public function login() {
@@ -30,23 +25,31 @@ class DashboardController extends Controller
         return view('dashboard.login');
     }
 
+    public function logout() {
+        $this->sdk->logout();
+
+        return redirect()->route('dashboard.login');
+    }
+
     public function authorizeClient(Request $request) {
         $action = $request->input('action');
         switch($action) {
             case 'login':
                 // If client is already logged in, return
                 if($this->sdk->clientUserAuthorized())
-                    return redirect()->route('dashboard.login')->with('status', 'jammerjoh');
+                    return redirect()->route('dashboard')->with('status', 'User already logged in');
 
                 $username = $request->input('username');
                 $password = $request->input('password');
-                $this->sdk->authorizeClientUser($username, $password);
 
-                if($this->sdk->clientUserAuthorized())
+                try {
+                    $this->sdk->authorizeClientUser($username, $password);
+
                     return redirect()->route('dashboard');
-                else
-                    return redirect()->route('dashboard.login')->with('status', 'jammerjoh');
-                break;
+                } catch ( InvalidCredentialsException $e ) {
+                    return redirect()->route('dashboard.login')->with('status', 'Invalid credentials provided!');
+                }
+            break;
         }
     }
 }

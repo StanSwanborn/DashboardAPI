@@ -14,17 +14,11 @@
 use Laravel\Lumen\Application;
 
 $app->get('/', function () use ($app) {
-    return $app->welcome();
+    return redirect()->to('dashboard');
 });
 
-$app->group([], function ($app) {
+$app->group([], function($app) {
     /** @var Application $app */
-
-    // DASHBOARD
-    $app->get('dashboard', [
-        'uses' => 'App\Http\Controllers\DashboardController@index',
-        'as' => 'dashboard'
-    ]);
 
     $app->get('dashboard/login', [
         'uses' => 'App\Http\Controllers\DashboardController@login',
@@ -34,5 +28,26 @@ $app->group([], function ($app) {
     $app->post('dashboard/authorizeClient', [
         'uses' => 'App\Http\Controllers\DashboardController@authorizeClient',
         'as' => 'dashboard.authorizeClient'
+    ]);
+});
+
+
+$app->group(['middleware' => 'auth'], function ($app) {
+    /** @var Application $app */
+
+    // DASHBOARD
+    $app->get('dashboard', [
+        'uses' => 'App\Http\Controllers\DashboardController@index',
+        'as' => 'dashboard'
+    ]);
+
+    $app->get('dashboard/logout', [
+        'uses' => 'App\Http\Controllers\DashboardController@logout',
+        'as' => 'dashboard.logout'
+    ]);
+
+    $app->get('dashboard/clients', [
+        'uses' => 'App\Http\Controllers\ClientController@index',
+        'as' => 'dashboard.client'
     ]);
 });

@@ -104,10 +104,10 @@
                 <!-- #section:basics/navbar.user_menu -->
                 <li class="light-blue">
                     <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                        <img class="nav-user-photo" src="data:image/png;base64,{{ $user->picture }}" alt="user_picture" />
+                        <img class="nav-user-photo" src="@if(user()->picture) data:image/png;base64,{{ user()->picture }} @else {{ app('url')->asset("css/images/user-icon.png") }} @endif" alt="user_picture" />
                         <span class="user-info">
                             <small>Welcome,</small>
-                            {{ $user->name }}
+                            {{ user()->name }}
                         </span>
 
                         <i class="ace-icon fa fa-caret-down"></i>
@@ -115,23 +115,7 @@
 
                     <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
                         <li>
-                            <a href="#">
-                                <i class="ace-icon fa fa-cog"></i>
-                                Settings
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="profile.html">
-                                <i class="ace-icon fa fa-user"></i>
-                                Profile
-                            </a>
-                        </li>
-
-                        <li class="divider"></li>
-
-                        <li>
-                            <a href="#">
+                            <a href="{{ route('dashboard.logout') }}">
                                 <i class="ace-icon fa fa-power-off"></i>
                                 Logout
                             </a>
