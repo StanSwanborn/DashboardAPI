@@ -37,26 +37,20 @@
                 <b class="arrow"></b>
             </li>
 
-            {{--<li class="@if(on_route('dashboard')) active @endif">--}}
-            <li>
+            <li class="@if(on_route('dashboard')) active @endif">
                 <a href="{{ route('dashboard') }}">
                     <i class="menu-icon fa fa-list"></i>
                     <span class="menu-text"> Models </span>
-
-                    <b class="arrow fa fa-angle-down"></b>
                 </a>
             </li>
-            {{--<li class="@if(on_route('dashboard')) active @endif">--}}
-            <li>
-                <a href="{{ route('dashboard') }}">
+            <li class="@if(on_route('dashboard.client')) active @endif">
+                <a href="{{ route('dashboard.client') }}">
                     <i class="menu-icon fa fa-user"></i>
                     <span class="menu-text"> Clients </span>
-
-                    <b class="arrow fa fa-angle-down"></b>
                 </a>
             </li>
             <li class="">
-                <a href="#" class="dropdown-toggle">
+                <a href="#">
                     <i class="menu-icon fa fa-pencil-square-o"></i>
                     <span class="menu-text"> Documentation </span>
 

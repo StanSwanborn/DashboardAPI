@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__.'/../vendor/autoload.php';
-require_once 'C:\Users\Stan\Documents\GitHub\SDK\KundenMeisterSDK\vendor\autoload.php';
+require_once 'C:\km_sdk\sdk\vendor\autoload.php';
 
 Dotenv::load(__DIR__.'/../');
 
@@ -45,6 +45,14 @@ $app->singleton(
     App\Console\Kernel::class
 );
 
+$app->singleton(
+    \App\Services\KundenMeisterService::class
+);
+
+$app->singleton(
+    App\Services\Contracts\CacheService::class,
+    App\Services\Implementations\CacheService\RedisCacheService::class
+);
 /*
 |--------------------------------------------------------------------------
 | Register Middleware
@@ -67,6 +75,10 @@ $app->singleton(
 // $app->routeMiddleware([
 
 // ]);
+
+$app->routeMiddleware([
+    'auth' => App\Http\Middleware\AuthMiddleware::class
+]);
 
 /*
 |--------------------------------------------------------------------------
