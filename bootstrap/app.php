@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__.'/../vendor/autoload.php';
-require_once 'C:\km_sdk\sdk\vendor\autoload.php';
+require_once 'C:\Users\Stan\Documents\GitHub\SDK\KundenMeisterSDK\vendor\autoload.php';
 
 Dotenv::load(__DIR__.'/../');
 
@@ -64,13 +64,13 @@ $app->singleton(
 |
 */
 
-// $app->middleware([
-//     // Illuminate\Cookie\Middleware\EncryptCookies::class,
-//     // Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
-//     // Illuminate\Session\Middleware\StartSession::class,
-//     // Illuminate\View\Middleware\ShareErrorsFromSession::class,
-//     // Laravel\Lumen\Http\Middleware\VerifyCsrfToken::class,
-// ]);
+ $app->middleware([
+//      Illuminate\Cookie\Middleware\EncryptCookies::class,
+//      Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+      Illuminate\Session\Middleware\StartSession::class,
+      Illuminate\View\Middleware\ShareErrorsFromSession::class,
+//      Laravel\Lumen\Http\Middleware\VerifyCsrfToken::class,
+ ]);
 
 // $app->routeMiddleware([
 
