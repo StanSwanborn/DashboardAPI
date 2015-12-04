@@ -11,10 +11,12 @@
             <div class="col-md-6 col-md-offset-3">
                 <h1>Applications <small>of {{ $clientName }}</small></h1>
             </div>
+            <a href="{{ route('dashboard.client.application.add', ['clientId' => $clientId]) }}" class="btn btn-default pull-left"><i class="glyphicon glyphicon-plus"></i></a>
         </div>
 
         @include('dashboard.sections.search')
         <div class="row">
+            {!! render_status() !!}
             <div class="table-responsive">
                 <table class="table table-hover">
                     <tr>

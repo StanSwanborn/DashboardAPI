@@ -59,6 +59,31 @@ if (! function_exists('on_route')) {
     }
 }
 
+if(! function_exists('render_status')) {
+    function render_status() {
+        $status = session('status');
+        $error = session('error');
+        $success = session('success');
+        $warning = session('warning');
+
+        $messages = "";
+        if($status) {
+            $messages .= ('<div class="alert alert-info" role="alert">' . $status . '</div>');
+        }
+        if($error) {
+            $messages .= ('<div class="alert alert-danger" role="alert">' . $error . '</div>');
+        }
+        if($success) {
+            $messages .= ('<div class="alert alert-success" role="alert">' . $success . '</div>');
+        }
+        if($warning) {
+            $messages .= ('<div class="alert alert-warning" role="alert">' . $warning . '</div>');
+        }
+
+        return $messages;
+    }
+}
+
 if (! function_exists('user')) {
     /**
      * @return \SDK\Responses\MeResponse

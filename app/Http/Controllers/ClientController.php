@@ -18,7 +18,7 @@ class ClientController extends Controller {
             'clients' => $this->sdk
                             ->repositories()
                             ->clients()
-                            ->getClients($request->get('page') * 50, 50, $request->get('where'))
+                            ->getClients($request->get('page') * 20, 20, $request->get('where'))
         ]);
     }
 

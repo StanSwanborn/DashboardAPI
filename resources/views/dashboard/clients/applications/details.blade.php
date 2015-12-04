@@ -15,6 +15,7 @@
             <a href="{{ route('dashboard.client.application.delete', ['clientId' => $clientId, 'applicationId' => $applicationId]) }}" class="btn btn-danger pull-left"><i class="glyphicon glyphicon-remove"></i></a>
         </div>
 
+        {!! render_status() !!}
         <table class="table">
             <tr>
                 <th>Key</th>

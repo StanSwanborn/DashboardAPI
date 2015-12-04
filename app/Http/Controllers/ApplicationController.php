@@ -15,7 +15,7 @@ class ApplicationController extends Controller {
 
     public function index(Request $request, $clientId) {
         return view('dashboard.clients.applications.index', [
-            'applications' => $this->sdk->repositories()->applications()->getApplications($clientId, $request->get('page') * 50, 50, $request->get('where')),
+            'applications' => $this->sdk->repositories()->applications()->getApplications($clientId, $request->get('page') * 20, 20, $request->get('where')),
             'clientId' => $clientId,
             'clientName'=> $this->sdk->repositories()->clients()->getClient($clientId)->name_mandant
         ]);
@@ -39,6 +39,18 @@ class ApplicationController extends Controller {
         ]);
     }
 
+    public function update(Request $request, $clientId, $applicationId) {
+        $result = $this->sdk
+            ->repositories()
+            ->applications()
+            ->updateApplication($clientId, $applicationId, $request->request->all());
+
+        if(!$result)
+            return redirect()->back()->with('error', 'Unable to update application!');
+
+        return redirect()->route('dashboard.client.application.details', ['clientId' => $clientId, 'applicationId' => $applicationId])->with('success', 'Application updated!');
+    }
+
     public function delete($clientId, $applicationId) {
         $result = $this->sdk
             ->repositories()
@@ -49,5 +61,23 @@ class ApplicationController extends Controller {
             return redirect()->back()->with('error', 'Failed to delete application!');
         
         return redirect()->route('dashboard.client.application', ['clientId' => $clientId])->with('success', 'Application deleted!');
+    }
+
+    public function add($clientId) {
+        return view('dashboard.clients.applications.add', [
+            'clientId' => $clientId,
+            'clientName'=> $this->sdk->repositories()->clients()->getClient($clientId)->name_mandant
+        ]);
+    }
+    public function insert(Request $request, $clientId) {
+        $result = $this->sdk
+            ->repositories()
+            ->applications()
+            ->insertApplication($clientId, $request->request->all());
+
+        if(!$result)
+            return redirect()->back()->with('error', 'Unable to add application!');
+
+        return redirect()->route('dashboard.client.application.details', ['clientId' => $clientId, 'applicationId' => $result])->with('success', 'Application added!');
     }
 }

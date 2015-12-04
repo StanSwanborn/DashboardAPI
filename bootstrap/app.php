@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__.'/../vendor/autoload.php';
-require_once 'C:\Users\Stan\Documents\GitHub\SDK\KundenMeisterSDK\vendor\autoload.php';
+require_once 'C:\km_sdk\sdk\vendor\autoload.php';
 
 Dotenv::load(__DIR__.'/../');
 
