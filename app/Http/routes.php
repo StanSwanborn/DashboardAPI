@@ -54,4 +54,16 @@ $app->group(['middleware' => 'auth'], function ($app) {
         'uses' => 'App\Http\Controllers\ApplicationController@index',
         'as' => 'dashboard.client.application'
     ]);
+    $app->get('dashboard/client/{clientId}/application/{applicationId}', [
+        'uses' => 'App\Http\Controllers\ApplicationController@details',
+        'as' => 'dashboard.client.application.details'
+    ]);
+    $app->get('dashboard/client/{clientId}/application/{applicationId}/edit', [
+        'uses' => 'App\Http\Controllers\ApplicationController@edit',
+        'as' => 'dashboard.client.application.edit'
+    ]);
+    $app->get('dashboard/client/{clientId}/application/{applicationId}/delete', [
+        'uses' => 'App\Http\Controllers\ApplicationController@delete',
+        'as' => 'dashboard.client.application.delete'
+    ]);
 });

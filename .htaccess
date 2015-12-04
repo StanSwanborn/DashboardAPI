@@ -4,7 +4,7 @@
         Options -MultiViews
     </IfModule>
 
-    RewriteEngine On
+    #RewriteEngine On
 
     # Redirect Trailing Slashes...
     RewriteRule ^(.*)/$ /$1 [L,R=301]
