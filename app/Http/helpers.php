@@ -26,7 +26,7 @@ if (! function_exists('on_route')) {
                     break;
                 }
 
-                if(Str::startsWith($pathInfo[$i], '{') && Str::endsWith($pathInfo[$i], '}'))
+                if(strpos($value, "{") === 0 && strpos($value, "}") === strlen($value)-1)
                     continue;
 
                 if($value != $pathInfo[$i]) {
