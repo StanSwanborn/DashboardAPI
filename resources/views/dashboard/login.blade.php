@@ -38,7 +38,7 @@
     ") }}" >;</script>
     <![endif]-->
 </head>
-<body class="login-layout" style="background-image: url('http://xyer.co/wallpaper/14/5/snow-hd-1080p-hd.jpg')">
+<body class="login-layout" style="background-image: url('//www.kundenmeister.com/crm/css/assets_new/css/images/meteorshower2.jpg')">
 <div class="main-container">
     <div class="main-content">
         <div class="row">
@@ -62,9 +62,10 @@
                                     <h4 class="header blue lighter bigger">
                                         <i class="ace-icon fa fa-user green"></i>
                                         Login with authorized Koerbler account
-
-                                        {{ session('status') }}
                                     </h4>
+                                    <p style="color: red">
+                                        {{ session('status') }}
+                                    </p>
 
                                     <div class="space-6"></div>
 

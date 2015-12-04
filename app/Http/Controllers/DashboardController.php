@@ -28,7 +28,7 @@ class DashboardController extends Controller
     public function logout() {
         $this->sdk->logout();
 
-        return redirect()->route('dashboard.login');
+        return redirect()->route('dashboard.login')->with('status', 'Successfully logged out.');
     }
 
     public function authorizeClient(Request $request) {
@@ -37,7 +37,7 @@ class DashboardController extends Controller
             case 'login':
                 // If client is already logged in, return
                 if($this->sdk->clientUserAuthorized())
-                    return redirect()->route('dashboard')->with('status', 'User already logged in');
+                    return redirect()->route('dashboard')->with('status', 'User already logged in.');
 
                 $username = $request->input('username');
                 $password = $request->input('password');

@@ -71,14 +71,20 @@
                                             </li>
 
                                             <li>
-                                                <a href="#">
+                                                <a href="#" onclick="getHistory('this_month')">
                                                     This Month
                                                 </a>
                                             </li>
 
                                             <li>
-                                                <a href="#">
+                                                <a href="#" onclick="getHistory('last_month')">
                                                     Last Month
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="#" onclick="getHistory('all')">
+                                                    All Time
                                                 </a>
                                             </li>
                                         </ul>
@@ -142,8 +148,50 @@
                 to.setTime(to.getTime() - dateOffset1);
                 break;
             case 'this_month':
+                $('#show_time').text('This Month');
+                var dateOffset2 = (24*60*60*1000) * 31; // 62 days
+                from.setTime(from.getTime() - dateOffset2);
+                to.setTime(to.getTime());
                 break;
             case 'last_month':
+                $('#show_time').text('Last Month');
+                var dateOffset1 = (24*60*60*1000) * 30; // 31 days
+                var dateOffset2 = (24*60*60*1000) * 62; // 62 days
+                from.setTime(from.getTime() - dateOffset2);
+                to.setTime(to.getTime() - dateOffset1);
+                break;
+            case 'all':
+                $('#show_time').text('All Time');
+                $.ajax({
+                    url: 'http://localhost:8081/index.php/statistics/all',
+                    type: 'get',
+                    success: function(history) {
+                        if(history.length == 1) {
+                            var custDate = new Date(history[0].Date);
+
+                            var custDD = custDate.getDate() + 1;
+                            var custMM = custDate.getMonth() + 1;
+                            var custYY = custDate.getFullYear();
+
+                            var strDate = custYY + '-' + custMM + '-' + custDD;
+
+                            history.push({Counter: history[0].Counter, Date: strDate});
+
+                            morris.options['ymax'] = 'auto[' + (history[0].Counter + 300).toString() + ']';
+                        }
+                        else {
+                            morris.options['ymax'] = 'auto';
+                        }
+
+                        var total = 0;
+                        for(var i = 0; i < history.length; i++)
+                            total += history[i].Counter;
+
+                        $('#avgHistory').text(Math.round(total / history.length) + ' / Day');
+                        morris.setData(history);
+                    }
+                });
+                return;
                 break;
         }
 
