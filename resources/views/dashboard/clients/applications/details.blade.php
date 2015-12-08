@@ -15,18 +15,20 @@
             <a href="{{ route('dashboard.client.application.delete', ['clientId' => $clientId, 'applicationId' => $applicationId]) }}" class="btn btn-danger pull-left"><i class="glyphicon glyphicon-remove"></i></a>
         </div>
 
-        {!! render_status() !!}
-        <table class="table">
-            <tr>
-                <th>Key</th>
-                <th>Value</th>
-            </tr>
-            @foreach($application as $key => $value)
+        <div class="row">
+            {!! render_status() !!}
+            <table class="table">
                 <tr>
-                    <th>{{ $key }}</th>
-                    <td>{{ $value }}</td>
+                    <th>Key</th>
+                    <th>Value</th>
                 </tr>
-            @endforeach
-        </table>
+                @foreach($application as $key => $value)
+                    <tr>
+                        <th>{{ $key }}</th>
+                        <td>{{ $value }}</td>
+                    </tr>
+                @endforeach
+            </table>
+        </div>
     </div>
 @endsection

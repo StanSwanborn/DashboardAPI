@@ -79,4 +79,33 @@ $app->group(['middleware' => 'auth'], function ($app) {
     $app->post('dashboard/client/{clientId}/applications/add', [
         'uses' => 'App\Http\Controllers\ApplicationController@insert'
     ]);
+
+
+    $app->get('dashboard/models', [
+        'uses' => 'App\Http\Controllers\ModelController@index',
+        'as' => 'dashboard.model'
+    ]);
+    $app->get('dashboard/models/export', [
+        'uses' => 'App\Http\Controllers\ModelController@export',
+        'as' => 'dashboard.model.export'
+    ]);
+
+    $app->get('dashboard/model/{modelName}', [
+        'uses' => 'App\Http\Controllers\ModelController@details',
+        'as' => 'dashboard.model.details'
+    ]);
+
+    $app->get('dashboard/model/{modelName}/delete', [
+        'uses' => 'App\Http\Controllers\ModelController@delete',
+        'as' => 'dashboard.model.delete'
+    ]);
+
+    $app->get('dashboard/models/add', [
+        'uses' => 'App\Http\Controllers\ModelController@add',
+        'as' => 'dashboard.model.add'
+    ]);
+    $app->post('dashboard/models/add', [
+        'uses' => 'App\Http\Controllers\ModelController@insert'
+    ]);
+
 });

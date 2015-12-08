@@ -11,7 +11,7 @@
             </li>
 
             <li class="@if(on_route('dashboard.model')) active @endif">
-                <a href="{{ route('dashboard') }}">
+                <a href="{{ route('dashboard.model') }}">
                     <i class="menu-icon fa fa-list"></i>
                     <span class="menu-text"> Models </span>
                 </a>

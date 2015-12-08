@@ -49,7 +49,6 @@
     <div class="main-container" id="main-container">
         @include('dashboard.layout.sidebar')
 
-
         @yield('content')
     </div><!-- /.main-container -->
 
