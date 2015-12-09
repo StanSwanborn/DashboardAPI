@@ -207,7 +207,7 @@
         postData.to = toYY + '-' + toMM + '-' + toDD;
 
         $.ajax({
-            url: 'http://localhost/index.php/statistics/history?from=' + JSON.stringify(from) + '&to=' + JSON.stringify(to),
+            url: 'http://localhost:8081/index.php/statistics/history?from=' + JSON.stringify(from) + '&to=' + JSON.stringify(to) + "&applicationId=<?= $applicationId ?>",
             type: 'get',
             success: function(history) {
                 if(history.length == 1) {
@@ -303,7 +303,7 @@
 
         setInterval(function updateLive() {
             $.ajax({
-                url: 'http://localhost/index.php/statistics/live',
+                url: 'http://localhost:8081/index.php/statistics/live',
                 type: 'get',
                 success: function(live) {
                     $("#live-data").text(live + ' / s');
