@@ -90,6 +90,14 @@
                                         </ul>
                                     </div>
                                 </div>
+                                <div class="widget-toolbar no-border">
+                                    <label class="inline">
+                                        Application:
+                                    </label>
+                                    <div class="inline">
+                                        <input id="applications">
+                                    </div>
+                                </div>
                             </div>
                             <div class="widget-body">
                                 <div class="widget-main">
@@ -127,6 +135,55 @@
 
 <script>
     var morris = null;
+    var selectedId = 1;
+
+    $(function() {
+        var availableTags = [];
+        var applicationArray = [];
+
+        $.ajax({
+            url: 'http://localhost:8081/index.php/statistics/applications',
+            type: 'get',
+            success: function(history) {
+                applicationArray = history;
+
+                selectedId = history[0].Id;
+                $('#applications').val(history[0].Name);
+
+                for(var i = 0; i < history.length; i++) {
+                    var record = history[i];
+                    availableTags.push(record.Name);
+                }
+            }
+        });
+
+        $( "#applications" ).autocomplete({
+            source: availableTags
+        });
+
+        $("#applications").keyup(function(e){
+            if(e.keyCode == 13)
+            {
+                var selected = $("#applications").val();
+
+                if(selected == "") {
+                    alert("You must chose an application!");
+                    selectedId = applicationArray[0].Id;
+                    $('#applications').val(applicationArray[0].Name);
+                    return;
+                }
+
+                for(var i = 0; i < applicationArray.length; i++) {
+                    var record = applicationArray[i];
+                    if(record.Name == selected) {
+                        selectedId = record.Id;
+                        getHistory('this_week');
+                    }
+                }
+            }
+        });
+    });
+
     function getHistory(time) {
         var postData = { from: '', to: ''};
         var from = new Date();
@@ -207,7 +264,7 @@
         postData.to = toYY + '-' + toMM + '-' + toDD;
 
         $.ajax({
-            url: 'http://localhost:8081/index.php/statistics/history?from=' + JSON.stringify(from) + '&to=' + JSON.stringify(to) + "&applicationId=<?= $applicationId ?>",
+            url: 'http://localhost:8081/index.php/statistics/history?from=' + JSON.stringify(from) + '&to=' + JSON.stringify(to) + "&applicationId=" + selectedId,
             type: 'get',
             success: function(history) {
                 if(history.length == 1) {

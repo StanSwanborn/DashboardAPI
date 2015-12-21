@@ -20,6 +20,9 @@
     <!-- ace styles -->
     <link rel="stylesheet" href="{{ app('url')->asset("css/dashboard/assets/css/ace.css") }}" class="ace-main-stylesheet" id="main-ace-style" />
 
+    <!-- General Style (custome style) -->
+    <link rel="stylesheet" href="{{ app('url')->asset("css/dashboard/general.css") }}" />
+
     <!--[if lte IE 9]>
     <link rel="stylesheet" href="{{ app('url')->asset("css/dashboard/assets/css/ace-part2.css") }}" class="ace-main-stylesheet" />
     <![endif]-->
@@ -37,11 +40,15 @@
 
     <!--[if lte IE 8]>
     <script src="{{ app('url')->asset(" css/dashboard/assets/js/html5shiv.js") }}"></script>
-    <script src = "{{ app('url')->asset("css/dashboard/assets/js/respond.js;") }}" >;</script>
+    <script src="{{ app('url')->asset("css/dashboard/assets/js/respond.js") }}" ></script>
     <![endif]-->
 
-    <!-- JQuery -->
+    <!-- jQuery -->
     <script src="{{ app('url')->asset("css/dashboard/assets/js/jquery/jquery-2.1.4.min.js") }}"></script>
+
+    <!-- jQuery UI -->
+    <script src="{{ app('url')->asset("css/dashboard/assets/js/jquery-ui.js") }}"></script>
+    <link rel="stylesheet" href="{{ app('url')->asset("css/dashboard/assets/css/jquery-ui.css") }}" />
 </head>
 <body class="no-skin">
     @include('dashboard.layout.nav')
