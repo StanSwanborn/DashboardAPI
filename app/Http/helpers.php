@@ -88,18 +88,24 @@ if (! function_exists('user')) {
     /**
      * @return \SDK\Responses\MeResponse
      */
-    function user()
-    {
+    function user() {
         /** @var KundenMeisterService $sdk */
         $sdk = app(KundenMeisterService::class);
 
         /** @var CacheService $cache */
         $cache = app(CacheService::class);
 
-        if(!$me = $cache->get('user', 'me'))
-            $cache->put('user', 'me', $me = $sdk->userManagement()->me());
+        if(!$me = $cache->get('user', 'me'.$sdk->userId()))
+            $cache->put('user', 'me'.$sdk->userId(), $me = $sdk->userManagement()->me(), 5);
 
         return $me;
+    }
+
+    function sdk() {
+        /** @var KundenMeisterService $sdk */
+        $sdk = app(KundenMeisterService::class);
+
+        return $sdk;
     }
 }
 

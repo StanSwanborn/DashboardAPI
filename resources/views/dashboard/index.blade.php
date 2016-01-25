@@ -141,26 +141,37 @@
         var availableTags = [];
         var applicationArray = [];
 
+        // Get applications to fill list
         $.ajax({
-            url: 'http://localhost:8081/index.php/statistics/applications',
+            url: '{{ sdk()->apiBaseUrl() }}/index.php/statistics/applications',
             type: 'get',
             success: function(history) {
                 applicationArray = history;
 
+                // Set the selected ID for if API Dashboard application does not exist
                 selectedId = history[0].Id;
                 $('#applications').val(history[0].Name);
 
                 for(var i = 0; i < history.length; i++) {
                     var record = history[i];
                     availableTags.push(record.Name);
+
+                    if(record.Name == "API Dashboard") {
+                        selectedId = record.Id;
+                        $('#applications').val(record.Name);
+
+                        getHistory('this_week');
+                    }
                 }
             }
         });
 
+        // Set autocomplete
         $( "#applications" ).autocomplete({
             source: availableTags
         });
 
+        // Check selected application
         $("#applications").keyup(function(e){
             if(e.keyCode == 13)
             {
@@ -220,7 +231,7 @@
             case 'all':
                 $('#show_time').text('All Time');
                 $.ajax({
-                    url: 'http://localhost:8081/index.php/statistics/all',
+                    url: '{{ sdk()->apiBaseUrl() }}/index.php/statistics/all',
                     type: 'get',
                     success: function(history) {
                         if(history.length == 1) {
@@ -241,6 +252,7 @@
                         }
 
                         var total = 0;
+                        console.log(history);
                         for(var i = 0; i < history.length; i++)
                             total += history[i].Counter;
 
@@ -264,7 +276,7 @@
         postData.to = toYY + '-' + toMM + '-' + toDD;
 
         $.ajax({
-            url: 'http://localhost:8081/index.php/statistics/history?from=' + JSON.stringify(from) + '&to=' + JSON.stringify(to) + "&applicationId=" + selectedId,
+            url: '{{ sdk()->apiBaseUrl() }}/index.php/statistics/history?from=' + JSON.stringify(from) + '&to=' + JSON.stringify(to) + "&applicationId=" + selectedId,
             type: 'get',
             success: function(history) {
                 if(history.length == 1) {
@@ -304,7 +316,7 @@
             hideHover: 'always',
             resize: true
         });
-        getHistory('this_week');
+
         var container = $("#live-area-chart");
         $("#live-area-chart").height(347);
 
@@ -345,8 +357,6 @@
             return res;
         }
 
-        //
-
         series = [{
             data: getLiveData(0),
             lines: {
@@ -354,13 +364,11 @@
             }
         }];
 
-        //
-
         var plot = getPlot(highest, container, series);
 
         setInterval(function updateLive() {
             $.ajax({
-                url: 'http://localhost:8081/index.php/statistics/live',
+                url: "{{ sdk()->apiBaseUrl() }}/index.php/statistics/live",
                 type: 'get',
                 success: function(live) {
                     $("#live-data").text(live + ' / s');
